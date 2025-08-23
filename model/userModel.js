@@ -3,5 +3,6 @@ const users = [];
 const transfers = [];
 
 module.exports = {
-  users
+  users,
+  transfers
 };
