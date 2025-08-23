@@ -40,9 +40,8 @@ describe('Transfer Controller', () => {
       sinon.restore();
     });
 
-    it('Usando Mocks: Quando informo informo valores válidos eu tenho 201 CREATED', async () => {
-    // mocar service
-    
+    it.only('Quando informo valores válidos eu tenho sucesso com 201 CREATED', async () => {
+    // mocar service    
     const tranferServiceMock = sinon.stub(transferService, 'transfer')
     tranferServiceMock.returns({ 
         from: "julio", 
@@ -58,10 +57,18 @@ describe('Transfer Controller', () => {
           value: 100
         });
 
+      /* uma opção de testes usando expect para cada atributo
       expect(resposta.status).to.equal(200);
       expect(resposta.body).to.have.property('from', 'julio');
       expect(resposta.body).to.have.property('to', 'priscila');
-      expect(resposta.body).to.have.property('value', 100);
+      expect(resposta.body).to.have.property('value', 100);*/
+
+      // usando fixtures
+      const respostaEsperada = require('../fixtures/respostas/quandoInformoValoresValidosEuTenhoSucessoCom201CREATED.json');
+      delete resposta.body.date;
+      delete respostaEsperada.date;
+      expect(resposta.body).to.deep.equal(respostaEsperada)
+      
       
       //retorna tudo e volta ao normal para recomeçar o teste
       sinon.restore();
