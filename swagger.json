@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "description": "API para registro, login, consulta de usuários e transferências."
   },
+  
   "paths": {
     "/register": {
       "post": {
@@ -66,6 +67,7 @@
     "/transfer": {
       "post": {
         "summary": "Transferir valores",
+        
         "requestBody": {
           "required": true,
           "content": {
@@ -85,6 +87,7 @@
         "responses": {
           "200": { "description": "Transferência realizada" },
           "400": { "description": "Erro de validação ou regra de negócio" }
+          
         }
       }
     },
