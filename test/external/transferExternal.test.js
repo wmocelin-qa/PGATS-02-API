@@ -6,7 +6,7 @@ describe('Transfer External', () => {
   describe('POST /transfer', () => {
     let token;
 
-    before(async () => {
+    beforeEach(async () => {
       console.log('Iniciando login para obter o token de teste...');
       const respostaLogin = await request('http://localhost:3000')
         .post('/login') // Verifique se a rota é /login ou /users/login

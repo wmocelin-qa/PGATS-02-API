@@ -2,38 +2,32 @@ const request = require('supertest');
 const { expect } = require('chai');
 const sinon = require('sinon');
 const app = require('../../app');
-const userService = require('../../service/userService');
 const transferService = require('../../service/transferService')
 
 describe('Transfer Controller', () => {
-  let token;
   describe('POST /transfer', () => {
     let token;
-   
-       before(async () => {
-         console.log('Iniciando login para obter o token de teste...');
-         const respostaLogin = await request('http://localhost:3000')
-           .post('/login') // Verifique se a rota é /login ou /users/login
-           .send({
-             username: 'juninho',
-             password: '1234'
-           });
-         
-         token = respostaLogin.body.token;
-         console.log('Token obtido com sucesso!', token);
-       });
 
-    afterEach(() => {
-      sinon.restore();
+    beforeEach(async () => {
+      console.log('Iniciando login para obter o token de teste...');
+      const respostaLogin = await request(app)
+        .post('/login') // Verifique se a rota é /login ou /users/login
+        .send({
+          username: 'juninho',
+          password: '1234'
+        });
+      
+      token = respostaLogin.body.token;
+      console.log('Token obtido com sucesso!', token);
     });
 
     it('Quando informo remetente e destinatário inexistente recebo status 400', async () => {
       const resposta = await request(app)
         .post('/transfer')
-        .set('authorization', token)
+        .set('Authorization', `Bearer ${token}`)
         .send({
-          from: "bob",
-          to: "la",
+          from: "juninho",
+          to: "usuario_inexistente",
           value: 100
         });
 
@@ -48,6 +42,7 @@ describe('Transfer Controller', () => {
     
     const resposta = await request(app)
         .post('/transfer')
+        .set('Authorization', `Bearer ${token}`)
         .send({
           from: "bob",
           to: "la",
@@ -56,17 +51,15 @@ describe('Transfer Controller', () => {
 
       expect(resposta.status).to.equal(400);
       expect(resposta.body).to.have.property('error', 'Usuário remetente ou destinatário não encontrado');
-      
-      //retorna tudo e volta ao normal para recomeçar o teste
-      sinon.restore();
     });
 
     it.only('Quando informo valores válidos eu tenho sucesso com 200 CREATED', async () => {
    // Mock para o cenário de sucesso da transferência
-    const tranferServiceMock = sinon.stub(transferService, 'transfer').returns({
-      from: "juninho",
-      to: "gisele",
-      value: 10
+    const transferServiceMock = sinon.stub(transferService, 'transfer');
+    transferServiceMock.returns({ 
+      from: "juninho", 
+      to: "gisele", 
+      value: 10,
     });
 
       const resposta = await request(app)
@@ -89,11 +82,10 @@ describe('Transfer Controller', () => {
       delete resposta.body.date;
       delete respostaEsperada.date;
       expect(resposta.body).to.deep.equal(respostaEsperada)
-      console.log(token)
-      
-      //retorna tudo e volta ao normal para recomeçar o teste
-      sinon.restore();
+    });
 
+     afterEach(() => {
+      sinon.restore();
     });
   });
 });
