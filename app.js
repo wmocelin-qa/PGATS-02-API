@@ -1,6 +1,7 @@
 const express = require('express');
 const userController = require('./controller/userController');
 const transferController = require('./controller/transferController');
+const authenticateToken = require('./middleware/auth');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
@@ -11,7 +12,7 @@ app.use(express.json());
 app.post('/register', userController.register);
 app.post('/login', userController.login);
 app.get('/users', userController.list);
-app.post('/transfer', transferController.transfer);
+app.post('/transfer', authenticateToken, transferController.transfer);
 app.post('/favorecido', userController.addFavorecido);
 app.post('/deposit', userController.deposit);
 
