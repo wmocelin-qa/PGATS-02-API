@@ -1,3 +1,4 @@
+
 {
   "openapi": "3.0.0",
   "info": {
@@ -66,7 +67,8 @@
     },
     "/transfer": {
       "post": {
-        "summary": "Transferir valores",
+  "summary": "Transferir valores",
+  "security": [ { "bearerAuth": [] } ],
         
         "requestBody": {
           "required": true,
@@ -86,7 +88,9 @@
         },
         "responses": {
           "200": { "description": "Transferência realizada" },
-          "400": { "description": "Erro de validação ou regra de negócio" }
+          "400": { "description": "Erro de validação ou regra de negócio" },
+          "401": { "description": "Token não fornecido ou inválido" },
+          "403": { "description": "Token inválido" }
           
         }
       }
@@ -137,6 +141,15 @@
           "200": { "description": "Depósito realizado" },
           "400": { "description": "Erro de validação" }
         }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }

@@ -12,5 +12,7 @@ exports.transfer = async (req, res) => {
     if (err.status) {
       return res.status(err.status).json({ error: err.message });
     }
+    console.error('Erro inesperado na transferência:', err);
+    return res.status(500).json({ error: 'Ocorreu um erro inesperado no servidor.' });
   }
 };
