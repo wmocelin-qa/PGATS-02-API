@@ -8,14 +8,20 @@ const transferService = require('../../service/transferService')
 describe('Transfer Controller', () => {
   let token;
   describe('POST /transfer', () => {
-    beforeEach(async () => {
-      const respostaLogin = await request(app)
-        .post('/login')
-        .send({
-          username: 'juninho',
-          password: '123'
-        });
-    });
+    let token;
+   
+       before(async () => {
+         console.log('Iniciando login para obter o token de teste...');
+         const respostaLogin = await request('http://localhost:3000')
+           .post('/login') // Verifique se a rota é /login ou /users/login
+           .send({
+             username: 'juninho',
+             password: '1234'
+           });
+         
+         token = respostaLogin.body.token;
+         console.log('Token obtido com sucesso!', token);
+       });
 
     afterEach(() => {
       sinon.restore();
