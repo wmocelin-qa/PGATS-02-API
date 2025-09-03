@@ -7,7 +7,6 @@ describe('Transfer External', () => {
     let token;
 
     beforeEach(async () => {
-      console.log('Iniciando login para obter o token de teste...');
       const respostaLogin = await request('http://localhost:3000')
         .post('/login') // Verifique se a rota é /login ou /users/login
         .send({
@@ -16,7 +15,6 @@ describe('Transfer External', () => {
         });
       
       token = respostaLogin.body.token;
-      console.log('Token obtido com sucesso!', token);
     });
 
     it('Quando informo remetente e destinatário existentes recebo status 200. External!', async () => {
@@ -54,7 +52,6 @@ describe('Transfer External', () => {
           value: 100
         });
 
-      console.log(token) // apenas para testes
       expect(resposta.status).to.equal(400);
       expect(resposta.body).to.have.property('error', 'Usuário remetente ou destinatário não encontrado');
     });

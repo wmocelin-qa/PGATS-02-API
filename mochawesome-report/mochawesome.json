@@ -1,0 +1,157 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-09-03T20:30:27.571Z",
+    "end": "2025-09-03T20:30:27.694Z",
+    "duration": 123,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "5f3330e6-a05f-454d-b09e-baf22971c29a",
+      "title": "",
+      "fullFile": "C:\\Users\\Gisele Mocelin\\OneDrive\\Documentos\\PGATS\\Automação de Testes de API\\PGATS-02-API\\test\\controller\\transferController.test.js",
+      "file": "\\test\\controller\\transferController.test.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "a5aef273-880c-4e92-8363-0a7a821edeb2",
+          "title": "Transfer Controller",
+          "fullFile": "C:\\Users\\Gisele Mocelin\\OneDrive\\Documentos\\PGATS\\Automação de Testes de API\\PGATS-02-API\\test\\controller\\transferController.test.js",
+          "file": "\\test\\controller\\transferController.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [],
+          "suites": [
+            {
+              "uuid": "76df027e-3377-4451-b4ac-4f5c530149f7",
+              "title": "POST /transfer",
+              "fullFile": "C:\\Users\\Gisele Mocelin\\OneDrive\\Documentos\\PGATS\\Automação de Testes de API\\PGATS-02-API\\test\\controller\\transferController.test.js",
+              "file": "\\test\\controller\\transferController.test.js",
+              "beforeHooks": [
+                {
+                  "title": "\"before each\" hook in \"POST /transfer\"",
+                  "fullTitle": "Transfer Controller POST /transfer \"before each\" hook in \"POST /transfer\"",
+                  "timedOut": false,
+                  "duration": 98,
+                  "state": null,
+                  "speed": null,
+                  "pass": false,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const respostaLogin = await request(app)\n  .post('/login') // Verifique se a rota é /login ou /users/login\n  .send({\n    username: 'juninho',\n    password: '1234'\n  });\n\ntoken = respostaLogin.body.token;",
+                  "err": {},
+                  "uuid": "07c649ca-bcc0-4008-8663-24f8c9b668b7",
+                  "parentUUID": "76df027e-3377-4451-b4ac-4f5c530149f7",
+                  "isHook": true,
+                  "skipped": false
+                }
+              ],
+              "afterHooks": [
+                {
+                  "title": "\"after each\" hook in \"POST /transfer\"",
+                  "fullTitle": "Transfer Controller POST /transfer \"after each\" hook in \"POST /transfer\"",
+                  "timedOut": false,
+                  "duration": 0,
+                  "state": null,
+                  "speed": null,
+                  "pass": false,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "sinon.restore();",
+                  "err": {},
+                  "uuid": "fc37ba24-917a-48d3-86ba-e7f0532522ac",
+                  "parentUUID": "76df027e-3377-4451-b4ac-4f5c530149f7",
+                  "isHook": true,
+                  "skipped": false
+                }
+              ],
+              "tests": [
+                {
+                  "title": "Usando Mocks: Quando informo remetente e destinatário inexistente recebo status 400",
+                  "fullTitle": "Transfer Controller POST /transfer Usando Mocks: Quando informo remetente e destinatário inexistente recebo status 400",
+                  "timedOut": false,
+                  "duration": 16,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "// mocar service    \n/*const erroSimulado = new Error('Usuário remetente ou destinatário não encontrado');\nerroSimulado.status = 400;\n// Configure o mock para lançar este erro personalizado.\nsinon.stub(transferService, 'transfer').throws(erroSimulado);*/\n\nconst resposta = await request(app)\n    .post('/transfer')\n    .set('Authorization', `Bearer ${token}`)\n    .send({\n      from: \"juninho\",\n      to: \"giselre\",\n      value: 100\n    });\n  expect(resposta.status).to.equal(400);\n  expect(resposta.body).to.have.property('error', 'Usuário remetente ou destinatário não encontrado');",
+                  "err": {},
+                  "uuid": "c04275d7-726f-40fd-b941-9dd47de95871",
+                  "parentUUID": "76df027e-3377-4451-b4ac-4f5c530149f7",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "c04275d7-726f-40fd-b941-9dd47de95871"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 16,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 10000
+            }
+          ],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 10000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 10000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "11.7.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}
