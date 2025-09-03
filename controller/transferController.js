@@ -11,8 +11,9 @@ exports.transfer = async (req, res) => {
   } catch (err) {
     if (err.status) {
       return res.status(err.status).json({ error: err.message });
+    } else {
+      // Se não houver status, retorna 500 por padrão
+      return res.status(500).json({ error: 'Ocorreu um erro inesperado no servidor.' });
     }
-    console.error('Erro inesperado na transferência:', err);
-    return res.status(500).json({ error: 'Ocorreu um erro inesperado no servidor.' });
   }
 };
