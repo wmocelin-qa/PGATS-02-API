@@ -19,7 +19,7 @@ describe('Transfer External', () => {
       console.log('Token obtido com sucesso!', token);
     });
 
-    it.only('Quando informo remetente e destinatário existentes recebo status 200. External!', async () => {
+    it('Quando informo remetente e destinatário existentes recebo status 200. External!', async () => {
       // realizar transferência
       const resposta = await request('http://localhost:3000')
         .post('/transfer')
