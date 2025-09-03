@@ -9,7 +9,6 @@ describe('Transfer Controller', () => {
     let token;
 
     beforeEach(async () => {
-      console.log('Iniciando login para obter o token de teste...');
       const respostaLogin = await request(app)
         .post('/login') // Verifique se a rota é /login ou /users/login
         .send({
@@ -18,16 +17,20 @@ describe('Transfer Controller', () => {
         });
       
       token = respostaLogin.body.token;
-      console.log('Token obtido com sucesso!', token);
     });
 
+    // it funcionando com only 
     it('Quando informo remetente e destinatário inexistente recebo status 400', async () => {
+      const errorMessage = 'Usuário remetente ou destinatário não encontrado';
+      const erroSimulado = new Error(errorMessage);
+      erroSimulado.status = 400;
+
       const resposta = await request(app)
         .post('/transfer')
         .set('Authorization', `Bearer ${token}`)
         .send({
           from: "juninho",
-          to: "usuario_inexistente",
+          to: "1234",
           value: 100
         });
 
@@ -35,20 +38,21 @@ describe('Transfer Controller', () => {
       expect(resposta.body).to.have.property('error', 'Usuário remetente ou destinatário não encontrado');
     });
 
+    // only anterior já funcionando
     it.only('Usando Mocks: Quando informo remetente e destinatário inexistente recebo status 400', async () => {
     // mocar service    
-    const erroSimulado = new Error('Usuário remetente ou destinatário não encontrado');
+    /*const erroSimulado = new Error('Usuário remetente ou destinatário não encontrado');
     erroSimulado.status = 400;
 
     // Configure o mock para lançar este erro personalizado.
-    sinon.stub(transferService, 'transfer').throws(erroSimulado);
+    sinon.stub(transferService, 'transfer').throws(erroSimulado);*/
     
     const resposta = await request(app)
         .post('/transfer')
         .set('Authorization', `Bearer ${token}`)
         .send({
-          from: "bob",
-          to: "la",
+          from: "juninho",
+          to: "giselre",
           value: 100
         });
 
@@ -57,13 +61,13 @@ describe('Transfer Controller', () => {
     });
 
     it('Quando informo valores válidos eu tenho sucesso com 200 CREATED', async () => {
-   // Mock para o cenário de sucesso da transferência
+   /* Mock para o cenário de sucesso da transferência
     const transferServiceMock = sinon.stub(transferService, 'transfer');
     transferServiceMock.returns({ 
       from: "juninho", 
       to: "gisele", 
       value: 10,
-    });
+    });*/
 
       const resposta = await request(app)
         .post('/transfer')
